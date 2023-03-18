@@ -1,10 +1,23 @@
 const BASE_URL = "https://notionthemes.netlify.app";
 
+const customThemes = {
+  Dracula2: {
+    img: "/dark/dracula/preview.png",
+    style: "dark",
+    path: "/dark/dracula/theme.css",
+    maker: {
+      name: "Yudax",
+      socialLink: "https://twitter.com/_yudax"
+    }
+  },
+}
+
 // Fetch themes from the json config file
 const getThemes = async () => {
   try {
-    const data = await fetch(`${BASE_URL}/themes.json`);
-    return await data.json();
+    let data = await fetch(`${BASE_URL}/themes.json`);
+    data = await data.json();
+    return {...data, ...customThemes };
   } catch (err) {
     console.error(err);
     return null;
@@ -123,7 +136,7 @@ const previewThemes = async (data) => {
         <div class="description">
           <span class="indicator"></span>
           <span class="name">${theme.name}</span>
-         
+
         </div>`;
     li.addEventListener("click", (event) => {
       setTheme(theme, event.currentTarget);
